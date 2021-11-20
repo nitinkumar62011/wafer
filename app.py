@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return "Flask app is running"
+    return "Flask app is running right now i have changed"
 
 
 if __name__ == "__main__":
