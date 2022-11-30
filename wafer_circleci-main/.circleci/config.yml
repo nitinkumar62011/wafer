@@ -1,5 +1,3 @@
-# this is code for circleci machine
-
 version: 2.1
 orbs:
   heroku: circleci/heroku@1.0.1
@@ -7,7 +5,7 @@ jobs:
   build-and-test:
     executor: heroku/default
     docker:
-      - image: circleci/python:3.6.2-stretch-browsers # it is machine for circleci where docker be build
+      - image: circleci/python:3.6.2-stretch-browsers
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference

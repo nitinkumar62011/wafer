@@ -1,5 +1,21 @@
-# this is code for circleci machine
+## Create a file "Dockerfile" with below content
 
+```
+FROM python:3.7
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+ENTRYPOINT [ "python" ]
+CMD [ "main.py" ]
+```
+
+## Create a "Procfile" with following content
+```
+web: gunicorn main:app
+```
+
+## create a file ".circleci\config.yml" with following content
+```
 version: 2.1
 orbs:
   heroku: circleci/heroku@1.0.1
@@ -7,7 +23,7 @@ jobs:
   build-and-test:
     executor: heroku/default
     docker:
-      - image: circleci/python:3.6.2-stretch-browsers # it is machine for circleci where docker be build
+      - image: circleci/python:3.6.2-stretch-browsers
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -19,7 +35,7 @@ jobs:
           name: Install Python deps in a venv
           command: |
             echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=${DOCKER_IMAGE_NAME}' >> $BASH_ENV
+            echo 'export IMAGE_NAME=python-circleci-docker' >> $BASH_ENV
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
@@ -75,3 +91,34 @@ workflows:
             branches:
               only:
                 - main
+```
+
+
+## initialize git repo
+
+```
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Avnish327030/wafer_circleci.git
+git push -u origin main
+```
+
+## create a account at circle ci
+
+<a href="https://circleci.com/login/">Circle CI</a>
+
+## setup your project 
+
+<a href="https://app.circleci.com/projects/github/Avnish327030/setup/"> Setup project </a>
+
+## Select project setting in CircleCI and below environment variable
+
+>DOCKERHUB_USER
+>DOCKER_HUB_PASSWORD_USER
+>HEROKU_API_KEY
+>HEROKU_APP_NAME
+>HEROKU_EMAIL_ADDRESS
+
+>DOCKER_IMAGE_NAME=<wafercircle3270303>
